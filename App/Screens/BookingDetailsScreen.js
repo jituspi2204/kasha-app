@@ -36,7 +36,7 @@ const BookingDetailsScreen = (props) => {
               position : "absolute",
               top : 0,
               left: 0,
-              opacity : 0.2
+              opacity : 0.1
           }} />
         <View style={style.header}>
           <Image

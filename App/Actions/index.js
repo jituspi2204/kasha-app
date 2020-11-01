@@ -7,7 +7,15 @@ export const login = (data) => {
         }
     }
 }
-
+export const loadUser = (data) => {
+    return {
+        type : "LOAD_USER",
+        payload : {
+            jwt : data.jwt,
+            user : data.user
+        }
+    }
+}
 export const register = () => {
 
 }
@@ -18,15 +26,4 @@ export const newUser = () => {
 
 export const logout  = () => {
     
-}
-
-
-export const loadUser = (data) => {
-    return {
-        type : "LOAD_USER",
-        payload : {
-            jwt : data.jwt,
-            user : data.user
-        }
-    }
 }

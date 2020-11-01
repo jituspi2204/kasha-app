@@ -14,12 +14,11 @@ const App = props => {
     useEffect(()=>{
         changeLoading(false);
     }, [])
-
-    // if(loading){
-    //     return(
-    //         <Splash />
-    //     )
-    // }
+    if(loading){
+        return(
+            <Splash />
+        )
+    }
     return(
       <Provider store = {store}>
         <AppNavigator />

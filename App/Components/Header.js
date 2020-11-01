@@ -5,6 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Headers = props => {
     const [loading , changeLoading] = useState(false);
@@ -12,18 +13,27 @@ const Headers = props => {
     return(
         <Header 
             containerStyle = {style.containerStyle}
-            rightComponent = { 
-              
-                <AntDesign name="search1" size={24} color="#fff" />
-           
+            rightComponent = {
+                <View style = {{display :"flex",flexDirection :"row",alignItems : "center"}}>
+                {props.goBack ?  <Feather name="corner-up-left" size={24} color="#fff" 
+                    onPress = {()=> props.navigation.goBack()}
+                />: null}
+               <Feather name="bell" size={24} color="#fff" style = {{padding : 5,borderWidth : 1,borderRadius : 100, borderColor : "#fff",marginHorizontal : 10}}/>
+                </View>
             }
             leftComponent = {
-                props.goBack ?<AntDesign name="back" size={28} color="#fff" 
-                    onPress = {() => props.navigation.goBack()}
-                /> : <Feather name="menu" size={28} color= "#fff"  onPress = {() => props.navigation.toggleDrawer()}/>
+               <Image 
+                   source= {require('../Assets/images/logo.png')}
+                   style = {{width : 50,height: 50}}
+               />
             }
-          
-            backgroundColor =  "rgba(255, 98, 36, 0.8)"
+            ViewComponent = {LinearGradient}
+            backgroundColor =  "rgba(252, 182, 3, 0.7)"
+            linearGradientProps = {{
+                colors:["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"],
+                start : {x : 0, y : 0},
+                end : {x : 1, y : 0}
+            }}
             centerContainerStyle = {{alignItems : "flex-start"}}
             centerComponent = {<Text style = {{fontSize : 18, fontWeight : "600",color :"#fff",}}>{props.title}</Text>}
         />
@@ -33,11 +43,11 @@ const Headers = props => {
 
 const  style = StyleSheet.create({
     logoStyle : {
-        height : 55,
+        height : 75,
         width : 80
     },
     containerStyle : {
-        height : 75,
+        height : 85,
         paddingHorizontal : 10,
         borderBottomWidth : 0,
         paddingTop : 20,

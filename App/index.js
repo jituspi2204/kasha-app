@@ -7,40 +7,48 @@ import {connect} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 const App = props => {
 
-    const [loading , chagneLoading] = useState(true);
+    const [loading , changeLoading] = useState(true);
     useEffect(() => {
-        AsyncStorage.getItem('jwt')
+        AsyncStorage.multiGet(['user' ,'jwt'])
         .then(data => {
-            if(data){
-                call({
-                    method : "GET",
-                    url : "/me",
-                    data : {
-                        jwt : data
-                    },
-                    withCredentials : true
-                }).then(res => {
-                    console.log("==>",res.data);
-                    AsyncStorage.setItem("user" , JSON.stringify(res.data.myInfo))
-                    .then(() => {
-                        props.loadUser({jwt : data, user : res.data.myInfo});
-                        props.navigation.navigate('home');
-                    });
-                }).catch(error => {
-                    props.navigation.navigate("login")
-                })
+            if(data[0][1] && data[1][1]){
+                props.loadUser({jwt : data[1][1] , user : JSON.parse(data[0][1])})
+                props.navigation.navigate('home');
             }else{
-                props.navigation.navigate("login")
+                if(data[1][1]){
+                    call({
+                        method : "GET",
+                        url : "/me",
+                        data : {
+                            jwt : data[1][1]
+                        },
+                        withCredentials : true
+                    }).then(res => {
+                        console.log(res.data.myInfo);
+                        AsyncStorage.setItem("user" , JSON.stringify(res.data.myInfo))
+                        .then(() => {
+                            console.log("hi");
+                            props.loadUser({jwt : data[1][1], user : res.data.myInfo});
+                            props.navigation.navigate('home');
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        props.navigation.navigate("login")
+                    })
+                }else{
+                    props.navigation.navigate('login')
+                }
             }
-        }).catch(err => {
-            props.navigation.navigate("login")
+        })
+        .catch(err => {
+            console.log(err);
         })
     }, [])
 
     return(
         <View style = {style.contaner}>
         <LinearGradient
-          colors = {["rgba(255, 98, 36, 0.7)"  , "rgba(255, 149, 36,0.9)"]}
+        colors = {["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"]}  
           start = {{x : 0, y : 0}}
           end = {{x : 0 , y : 1}}
           style = {style.gradientContainer}

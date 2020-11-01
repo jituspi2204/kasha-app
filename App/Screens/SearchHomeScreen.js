@@ -17,21 +17,21 @@ import Header from "../Components/Header";
 
 
 const cities = [
-  ["Delhi",require('../Assets/images/delhi.jpg')],
-  ["Mumbai",require('../Assets/images/mumbai.jpg')],
-  ["Jaipur",require('../Assets/images/jaipur.jpg')],
-  ["Kolkata",require('../Assets/images/kolkata.jpg')],
-  ["Goa",require('../Assets/images/goa.jpg')],
-  ["Shimla",require('../Assets/images/shimla.jpg')],
-  ["Agra",require('../Assets/images/agra.jpg')],
-  ["Udaipur",require('../Assets/images/udaipur.jpg')],
-  ["Banglore",require('../Assets/images/banglore.jpg')],
-  ["Ghaziabad",require('../Assets/images/ghaziabad.jpg')],
-  ["Hyderabad",require('../Assets/images/hyderabad.jpg')],
-  ["Kanpur",require('../Assets/images/kanpur.jpg')],
-  ["Dalhousie",require('../Assets/images/dalhousie.jpg')],
-  ["Chandigarh",require('../Assets/images/chandigarh.jpg')],
-  ["Havelock Island",require('../Assets/images/havelockisland.jpeg')],
+  ["Delhi",require('../Assets/images/delhi.jpg'),"New Delhi, India"],
+  ["Mumbai",require('../Assets/images/mumbai.jpg'), "Maharashtra, India"],
+  ["Jaipur",require('../Assets/images/jaipur.jpg'), "Rajasthan,India"],
+  ["Kolkata",require('../Assets/images/kolkata.jpg'),"West Bengal, India"],
+  ["Goa",require('../Assets/images/goa.jpg'), "Goa, India"],
+  ["Shimla",require('../Assets/images/shimla.jpg') , "Himachal Pradesh, India"],
+  ["Agra",require('../Assets/images/agra.jpg'), "Uttar Pradesh, India"],
+  ["Udaipur",require('../Assets/images/udaipur.jpg'), "Rajasthan, India"],
+  ["Banglore",require('../Assets/images/banglore.jpg'), "Karnataka, India"],
+  ["Ghaziabad",require('../Assets/images/ghaziabad.jpg'), "Uttar Pradesh , India"],
+  ["Hyderabad",require('../Assets/images/hyderabad.jpg'), "Andhra Pradesh , India"],
+  ["Kanpur",require('../Assets/images/kanpur.jpg') , "Uttar Pradesh, India"],
+  ["Dalhousie",require('../Assets/images/dalhousie.jpg'), "Himachal Pradesh, India"],
+  ["Chandigarh",require('../Assets/images/chandigarh.jpg'),"Chandigarh, India"],
+  ["Havelock Island",require('../Assets/images/havelockisland.jpeg'), "Andaman and Nicobar Island , India"],
 
 
 ]
@@ -44,7 +44,10 @@ class SearchScreen extends React.Component {
     currentValue: "",
     searchResult: [],
     loader : false,
-    loading : false
+    loading : false,
+    currentLocation : false,
+    lat : 28.7041,
+    lng :  77.1025
   };
   componentDidMount() {
     call({
@@ -62,7 +65,7 @@ class SearchScreen extends React.Component {
   }
 
   getGeolocation = () => {
-    console.log("hi");
+    
     
   }
 
@@ -101,8 +104,8 @@ class SearchScreen extends React.Component {
       loading : true
     })
     console.log("Result - > ", this.state.currentValue);
-    let queryString = `?minPrice=${0}&maxPrice=${20000}&minRating=${0}&maxRating=${5}&minRange=${0}&maxRange=${100}&sortPrice=${1}&sortRating=${-1}&lat=${null}&lng=${null}&city=${
-      city || this.state.currentValue
+    let queryString = `?minPrice=${0}&maxPrice=${20000}&minRating=${0}&maxRating=${5}&minRange=${0}&maxRange=${100}&sortPrice=${1}&sortRating=${-1}&lat=${this.state.currentLocation ? this.state.lat : null}&lng=${this.state.currentLocation ? this.state.lng : null}&city=${
+      !this.state.currentLocation ? city || this.state.currentValue : null
     }&rooms=${0}`;
     call({
       method: "get",
@@ -120,7 +123,7 @@ class SearchScreen extends React.Component {
         name : 'result' ,
         params : {
           searchResult : res.data.result,
-          city : city || this.state.currentValue
+          city : !this.state.currentLocation ? city || this.state.currentValue : "Near You"
         }
       });
     })
@@ -147,21 +150,23 @@ class SearchScreen extends React.Component {
     const suggestionList = cities.map((el ,idx) => {
       return(
         <Button 
-          icon = {<Image source = {el[1]}
+          icon = {
+          <View style = {{display : "flex",width : "100%",flexDirection : "row",alignItems : "center",justifyContent : "flex-start",borderBottomWidth : 1,borderColor : "#ddd"}}>
+          <Image source = {el[1]}
 
-            style = {{width : "100%",flex:1}}
-          />}
-          title = {el[0]}
-          titleStyle = {{color : "rgba(255, 98, 36, 0.8)" }}
-          containerStyle = {{width : "32%",height: 100,
+            style = {{width : 50,height : 50,borderRadius: 5}}
+          />
+          <Text style = {{color : "#444",fontSize : 16,fontWeight : "300"}}> {  "  " +el[0] + ", " + el[2]}</Text>
+          </View>
+          }
+          titleStyle = {{color : "#444",fontSize : 18,fontWeight : "400"}}
+          containerStyle = {{width : "100%",height: 60,
             display : "flex",
             flexDirection : "column",
-            justifyContent : "space-between",
+            justifyContent : "flex-start",
             alignItems : "center",
-            backgroundColor : "#fff",
-            marginVertical : 2,
-            elevation : 1,
-            
+            marginVertical : 0,
+        
           }}
           buttonStyle = {{
             padding : 0,
@@ -170,8 +175,8 @@ class SearchScreen extends React.Component {
             height :"100%",
             backgroundColor : "rgba(255,255,255,0)",
             display : "flex",
-            flexDirection : "column",
-            justifyContent : "space-between",
+            flexDirection : "row",
+            justifyContent : "flex-start",
             alignItems : "center",
             
           }}
@@ -182,7 +187,7 @@ class SearchScreen extends React.Component {
 
     return (
       <View style = {{position : "relative", flex : 1 }}>
-      <Header navigation = {this.props.navigation}/>
+      <Header navigation = {this.props.navigation} title = "Search your Destination"/>
       {this.state.loader ? null : null}
         <Input
           autoFocus 
@@ -210,9 +215,28 @@ class SearchScreen extends React.Component {
             });
           }}
         />
-
         <ScrollView style={style.listStyle}>{list}
-        <Text style = {{fontWeight : "700" ,fontSize : 18 ,color : "rgba(255, 98, 36, 0.8)"}}>Top Visisted Places</Text>
+        <Button 
+            title = {!this.state.currentLocation ? "Use my location" : "Searching Near You"}
+            icon = {<MaterialIcons name="my-location" size={24} color={this.state.currentLocation ? "#036ffc":  "#444"} />}
+            iconRight  = {true}
+            buttonStyle = {{backgroundColor : "rgba(255,255,255,1)",
+                          alignItems : "center",
+                          display : "flex",
+                          flexDirection : "row",
+                          justifyContent : "space-between",
+                          padding : 10,
+                          marginBottom : 10,
+                      
+            }}
+            titleStyle = {{color : "#777"}}
+            onPress = {() => {this.setState({
+              currentLocation : !this.state.currentLocation
+            })
+            this.getData()
+            }}
+        />
+        <Text style = {{fontWeight : "700" ,fontSize : 18 ,color : "#555"}}>Recommended Places</Text>
           <View style = {{display :"flex",flexDirection : "row",
           padding: 4,justifyContent : "space-between",alignItems : "center",flexWrap  :"wrap"}}>
             {suggestionList}

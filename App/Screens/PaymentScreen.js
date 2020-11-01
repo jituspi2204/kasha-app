@@ -76,6 +76,7 @@ class BookingScreen extends React.Component {
       }
     }).then(res => {
       Alert.alert("Done" , "You booked a new hotel. Bill reciept has been send to your registered email.Note - Receipt is available for 5 minutes only")
+      this.props.navigation.goBack();
     })
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View , Text, StyleSheet } from 'react-native';
+import {View , Text, StyleSheet,Image } from 'react-native';
 import {Input , Button, CheckBox} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
@@ -7,102 +7,97 @@ import call from '../call';
 import {connect} from 'react-redux';
 import {login} from '../Actions';
 import AsyncStorage from '@react-native-community/async-storage';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Header from '../Components/Header';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { ScrollView } from 'react-native-gesture-handler';
 class LoginScreen extends React.Component{
 
     state = {
         email : "",
         password : "",
         showPassword : false,
+        name : ''
     }
 
-    inputHandler = (event , type) => {
-        if(type === 'email'){
-            this.setState({
-                email : event.nativeEvent.text
-            })
-        }else if(type === 'password'){
-            this.setState({
-                password : event.nativeEvent.text
-            })
-        }
-    }
-    loginHandler = () => {
-        if(this.state.password.length < 4 && this.email.length < 4){
-            return;
-        }
-
-        call({
-            method : "post",
-            url : "/login",
-            data : {
-              email : this.state.email,
-              password : this.state.password
-            },
-            withCredentials : true
-          }).then(res => {
-             if(status === 'success'){
-               AsyncStorage.setItem("jwt" , res.data.jwt).then(() => {
-                    this.props.login({jwt :res.data.jwt, userType : res.data.userType});
-                    
-               }).catch(err =>{
-
-               })
-             }
-          }).catch(err => {
-              console.log(err.response);
-          })
+   
+    componentDidMount(){
+       
     }
 
+    logout = () => {
+              AsyncStorage.multiRemove(["jwt", "user"]).then(() => {
+                this.props.route.params.navigation.navigate('login');
+              }).catch(err => {
+                console.log(err);
+              })
+            }
     render(){
         return(
             <View style = {style.container}>
-               <LinearGradient
-                    colors = {["rgba(255, 98, 36, 0.8)"  , "rgba(255, 149, 36,0.9)", ]}
+                <Header navigation = {this.props.navigation} title = "More" showSearch = {false}/>
+                <LinearGradient
+                    colors = {["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)" ]}
                     start = {{x : 0, y : 0}}
-                    end = {{x : 0 , y : 1}}
+                    end = {{x : 1 , y : 1}}
+                    style = {[style.itemStyle, {height : 150,padding : 20}]}
+               >
+                <Image 
+                   source = {{uri : "https://immense-hollows-05754.herokuapp.com/users/user-0.png"}}
+                   style = {{width : 60, height : 60 , borderRadius : 60}}
+                />
+                <Text style = {{color : "#fff" , fontSize : 18,marginLeft : "6%"}}>Hi, { this.props.user.name}</Text>
+               </LinearGradient>
+            
+              
+               <ScrollView
                     style = {style.gradientContainer}
                >
-               <Text style = {style.heading}> LOGIN</Text>
-                <Input 
-                    placeholder = "Email"
-                    inputStyle = {style.inputStyle}
-                    inputContainerStyle = {style.inputContainerStyle}
-                    containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="mail" size={24} color="black" />}
-                    onChange = {(event) => {this.inputHandler(event ,"email")} }
-                    value = {this.state.email}
-                />
-                <Input 
-                    placeholder = "Password"
-                    inputStyle = {style.inputStyle}
-                    inputContainerStyle = {style.inputContainerStyle}
-                    containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="unlock" size={24} color="black" />}
-                    onChange = {(event) => {this.inputHandler(event ,"password")} }
-                    value = {this.state.password}
-                    secureTextEntry = {!this.state.showPassword}
-                />
-                <CheckBox 
-                    title = "Show Password"
-                    containerStyle = {style.CheckboxContainerStyle}
-                    checkedColor = "#fff"
-                    uncheckedColor = "#fff"
-                    textStyle = {{color : "#fff",fontWeight : "400"}}
-                    checked = {this.state.showPassword}
-                    onPress = {() => {this.setState({
-                        showPassword : !this.state.showPassword
-                    })}}
-                />
                 <Button 
-                    title = "Login"
+                    title = "  Your Message"
+                    titleStyle = {style.text}
                     buttonStyle = {style.buttonStyle}
                     containerStyle = {style.buttonContainerStyle}
-                    onPress = {this.loginHandler}
+                    icon = {<AntDesign name="message1" size={24} color="black" />}
                 />
-                <Text style = {style.linkText} onPress = {()=>this.props.navigation.navigate("register")}>New User | Register</Text>
-                <Text style = {style.linkText}  onPress = {()=>this.props.navigation.navigate("forgotPassword")}>Forgot Password</Text>
-
-               </LinearGradient>
+                <Button 
+                    title = "  Your Offers"
+                    titleStyle = {style.text}
+                    buttonStyle = {style.buttonStyle}
+                    containerStyle = {style.buttonContainerStyle}
+                    onPress = {() => this.props.navigation.navigate("offers")}
+                    icon = { <MaterialIcons name="local-offer" size={24} color="black" />}
+                />
+                <Button 
+                    title = "  Your Reviews"
+                    titleStyle = {style.text}
+                    buttonStyle = {style.buttonStyle}
+                    containerStyle = {style.buttonContainerStyle}
+                    icon = {<AntDesign name="star" size={24} color="black" />}
+                    onPress = {() => this.props.navigation.navigate('reviews')}
+                />
+                <Button 
+                    title = "  Help"
+                    titleStyle = {style.text}
+                    buttonStyle = {style.buttonStyle}
+                    containerStyle = {style.buttonContainerStyle}
+                    icon = {  <MaterialIcons name="help-outline" size={24} color="black" />}
+                />
+                <Button 
+                    title = "  Feedback"
+                    titleStyle = {style.text}
+                    buttonStyle = {style.buttonStyle}
+                    containerStyle = {style.buttonContainerStyle}
+                    icon = { <MaterialIcons name="feedback" size={24} color="black" />}
+                />
+               
+                <View style = {[style.itemStyle, {flexDirection : "column",alignItems :"flex-start",height :"auto",paddingVertical : 10}]}>
+                    <Text style = {[style.text,{paddingVertical : 10}]}>   Privacy</Text>
+                    <Text style =  {[style.text,{paddingVertical : 10}]}>   Terms & conditions</Text>
+                    <Text style = {[style.text,{paddingVertical : 10}]} onPress = {this.logout}>   Sign Out</Text>
+                </View>
+               <Text style ={{textAlign :"center",fontSize : 16,fontWeight : "700",padding : 20}}>V 1.0.0</Text>
+               </ScrollView>            
             </View>
         )
     }
@@ -114,10 +109,7 @@ const style = StyleSheet.create({
     },
     gradientContainer : {
         flex : 1,
-        padding : 10,
-        display : "flex",
-        alignItems : "center",
-        justifyContent : "center"
+        padding : 5
     },
     inputStyle :{
         color : "#444",
@@ -139,22 +131,24 @@ const style = StyleSheet.create({
         fontSize : 22,
         fontWeight : "700",
         color : "#fff",
-        marginBottom : "20%"
+        marginBottom : "20%",
+        margin : 0
     },
     buttonStyle :{
-        backgroundColor : "rgba(255,255,255,0)",
-        borderWidth :1,
-        borderColor : "#fff",
+        backgroundColor : "rgba(255,255,255,1)",
+        borderWidth :0,
+        height : 55,
         width : "100%",
-        height:"100%",
-        borderRadius : 30
+        display : "flex",
+        flexDirection : "row",
+        justifyContent : "flex-start",
     },
     buttonContainerStyle : {
-        height: 60,
-        width: "95%",
+        height: 55,
+        width: "100%",
         alignSelf : "center",
-        borderRadius : 30,
-        marginTop : 50,
+        borderRadius : 1,
+        marginVertical : 1
     },
     CheckboxContainerStyle : {
         backgroundColor : "rgba(255,255,255,0)",
@@ -171,6 +165,21 @@ const style = StyleSheet.create({
         padding : 5,
         textDecorationLine :"underline",
         marginTop : 10
+    },
+    itemStyle : {
+        display : "flex",
+        flexDirection : "row",
+        justifyContent : "flex-start",
+        alignItems : "center",
+        width : "100%",
+        height :60,
+        borderBottomWidth : 1,
+        borderColor : "#ddd"
+    },
+    text : {
+        color : "#444",
+        fontWeight : "200",
+        fontSize : 15
     }
 })
 

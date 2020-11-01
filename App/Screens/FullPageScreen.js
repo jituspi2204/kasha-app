@@ -20,7 +20,7 @@ import call from "../call";
 import RatingContainer from '../Components/RatingContainer';
 import Header from "../Components/Header";
 import Indicator from "../Components/Indicator";
-
+import LinearGradient from 'react-native-linear-gradient'
 class FullPageScreen extends React.Component {
   state = {
     hotel: null,
@@ -315,7 +315,7 @@ class FullPageScreen extends React.Component {
           });
     const block =
       this.state.hotel === null ?  <Indicator /> : (
-          <View>
+          <View >
               <Header  navigation = {this.props.navigation} title = {this.state.hotel.propertyName} goBack = {true}/>
 
           {this.state.loading ? <Indicator /> :
@@ -343,7 +343,7 @@ class FullPageScreen extends React.Component {
               />
             </View>
           </View>
-          <Text style={style.headingTwo}>{address}</Text>
+          <Text style={[style.headingTwo,{backgroundColor : "#fff",padding : 5}]}>{address}</Text>
           <View style={style.priceContainer}>
             {this.getPriceBlock(
               this.state.hotel.amount - this.state.hotel.discount,
@@ -356,13 +356,19 @@ class FullPageScreen extends React.Component {
               true
             )}
           </View>
+          <View style = {{backgroundColor : "#fff",marginVertical : 1,padding : 5}}>
           <Text style={style.headingOne}>Room Facilities</Text>
           <View style={style.serviceContainer}>{roomServices}</View>
+          </View>
+          <View style = {{backgroundColor : "#fff",marginVertical : 1,padding :5}}>
           <Text style={style.headingOne}>Hotel Facilities</Text>
           <View style={style.serviceContainer}>{hotelServices}</View>
+           </View>
+           <View style = {{backgroundColor : "#fff",marginVertical : 2,paddingVertical :15,paddingHorizontal : 5}}>
           <Text style={style.headingOne}>About Hotel</Text>
           <Text style={style.desc}>{this.state.hotel.hotelDescription}</Text>
-          <View style = {{backgroundColor : "rgba(255, 149, 36,0.3)", padding : 10}}> 
+           </View>
+          <View style = {{backgroundColor : "#fff", padding : 10}}> 
           <Text style={style.headingOne}>Find Availability</Text>
           <View style={style.validate}>
             <Input
@@ -500,9 +506,15 @@ class FullPageScreen extends React.Component {
                 ) : null
               }
               iconRight
+              ViewComponent = {LinearGradient}
+              linearGradientProps = {{
+                colors:["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"],
+                start : {x : 0, y : 0},
+                end : {x : 1, y : 0}
+              }}
               title={this.state.vaccant ? this.state.roomSelected.length === this.state.room ? "Book Now" : "Select Room" : "Check"}
-              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 40 }}
-              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0.8)",borderRadius : 40}}
+              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 4 }}
+              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0)",borderRadius : 4}}
               onPress={this.checkAvailability}
             />
             <Input
@@ -542,34 +554,50 @@ class FullPageScreen extends React.Component {
                 )
               }
               iconRight
+              ViewComponent = {LinearGradient}
               title= {"Rs " + this.state.cupon.split('-').pop() + " off "}
-              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 40 }}
-              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0.8)",borderRadius : 40}}
-            
+              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 4 }}
+              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0)",borderRadius : 4}}
+              linearGradientProps = {{
+                colors:["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"],
+                start : {x : 0, y : 0},
+                end : {x : 1, y : 0}
+              }}
             />
               :
               this.state.isValidCupon === null ? 
               <Button
-             
+             linearGradientProps = {{
+                colors:["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"],
+                start : {x : 0, y : 0},
+                end : {x : 1, y : 0}
+              }}
+              ViewComponent = {LinearGradient}
               iconRight
               title= "Validate"
-              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 40 }}
-              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0.8)",borderRadius : 40}}
+              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 4}}
+              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0)",borderRadius : 4}}
               onPress = {this.validateCupon}
             />
             :
             <Button
-             
+             linearGradientProps = {{
+                colors:["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"],
+                start : {x : 0, y : 0},
+                end : {x : 1, y : 0}
+              }}
+              ViewComponent = {LinearGradient}
               iconRight
               title= "Invalid Coupon"
-              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 40 }}
-              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0.8)",borderRadius : 40}}
-              style = {{backgroundColor : "rgba(255, 98, 36, 0.8)"}}
+              containerStyle={{ width: "97%", marginLeft: 10, borderRadius: 4 }}
+              buttonStyle={{ height: 50 ,backgroundColor : "rgba(255, 98, 36, 0)",borderRadius : 4}}
+              style = {{backgroundColor : "rgba(255, 98, 36, 0)"}}
               onPress = {this.validateCupon}
             />
             }
           </View>
           </View>
+          <View style = {{backgroundColor : "#fff",marginVertical : 2,padding :5}}>
           <Text style={style.headingOne}>User Rating</Text>
           <RatingBox
             data={{
@@ -582,9 +610,11 @@ class FullPageScreen extends React.Component {
               totalUsers: this.state.hotel.totalUsers,
             }}
           />
+          
+           </View>
            <Text style={style.headingOne}>User Reviews</Text>
           <RatingContainer reviews = {this.state.reviews}/>
-
+       
         </ScrollView>}
         </View>
       );
@@ -594,8 +624,8 @@ class FullPageScreen extends React.Component {
 
 const style = StyleSheet.create({
   container: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
     marginBottom : 20,
     position : "relative"
   },
@@ -605,18 +635,19 @@ const style = StyleSheet.create({
     paddingTop: 20,
   },
   headingOne: {
-    color: "#f07532",
+    color: "#444",
     fontSize: 20,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 2,
+    marginBottom: 2,
     fontWeight : "700"
   },
   headingTwo: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 2,
+    marginBottom: 2,
     fontSize: 15,
     fontWeight: "100",
     fontStyle: "italic",
+    color : "#444"
   },
   imageIcon: {
     position: "absolute",
@@ -629,12 +660,11 @@ const style = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     borderWidth: 0,
-    backgroundColor : "#fff",
-    elevation : 1.5,
+    backgroundColor : "#f6f7f2",
     flexGrow: 1,
-    marginRight: 4,
-    marginLeft: 4,
-    marginBottom: 8,
+    marginRight: 2,
+    marginLeft: 2,
+    marginBottom: 2,
     padding: 8,
   },
   serviceContainer: {
@@ -642,8 +672,8 @@ const style = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
-    padding : 10
+    marginTop: 5,
+    padding : 0
   },
   servicesText: {
     textAlign: "center",
@@ -678,6 +708,9 @@ const style = StyleSheet.create({
     width: "100%",
     justifyContent: "flex-start",
     alignItems: "center",
+    backgroundColor : "#fff",
+    paddingVertical : 10,
+    paddingHorizontal  :5
   },
   priceBlock: {
     display: "flex",

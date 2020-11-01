@@ -16,7 +16,7 @@ const HotelCard = props => {
 
     return (
         <LinearGradient
-        colors = {["rgba(255, 98, 36, 0.8)"  , "rgba(255, 149, 36,0.1)", ]}
+        colors = {["rgba(252, 182, 3, 0)"  , "rgba(255, 149, 36,0)", ]}
         start = {{x : 0, y : 0}}
         end = {{x : 0 , y : 0.9}}
         style = {style.cardStyle}
@@ -61,9 +61,9 @@ const style = StyleSheet.create({
         display : 'flex',
         flexDirection : "column",
         justifyContent :"space-between",
-        borderRadius:10,
-        marginBottom : 10,
-        backgroundColor:"rgba(255,255,255,0)",
+        borderRadius:0,
+        marginBottom : 2,
+        backgroundColor : "#fff",
         elevation : 0
     },
     upperBox : {

@@ -63,29 +63,20 @@ const HomeScreen = (props) => {
   })
   return (
   <View style = {style.container}>
-   <Header navigation = {props.navigation} title = "KASHA.com"/>
+   <Header navigation = {props.navigation} title = "KASHA.com" showSearch = {true}/>
    {loading ? <Indicator /> : 
     <ScrollView style = {{padding : 10}}>
-    <View style = {style.container}>
-                
-               <View style = {{width : "100%" , height : 220,padding :10,backgroundColor : "rgba(255, 98, 36, 0.4)" }}>
-                   <Image 
-                       source = {require('../Assets/images/namaste.jpg')}
-                       style = {{width : 100, height : 100,alignSelf : "center",borderRadius :100}}
-                   />
-                   <Text style = {{textAlign :"center",fontSize : 15,color : "#333" }}>Thanks for connecting with us</Text>
-                   {/* <Text style = {{textAlign :"center",fontSize : 16}}>{this.props.lang['to get orders create your thela']}</Text> */}
-                    <Button 
-                        title = "Book Now"
-                        buttonStyle = {{width : 150,alignSelf :"center",backgroundColor  : "rgba(255, 98, 36, 0.8)" ,borderRadius : 50}}
-                        containerStyle = {{width : "100%",alignItems : "center",marginTop : 10}}
-                        titleStyle = {style.buttonTextStyle}
-                        onPress = {() => {props.navigation.navigate('Search')}}
-                    />
-                   
-               </View>
-            </View>
-    <Text style = {style.heading}>Top Cities</Text>
+    <View style = {style.container}>       
+        <View style = {{width : "100%" , height : "auto",padding :0,backgroundColor : "rgba(255, 149, 36,0)" }}>
+          
+            <Image 
+                source = {require('../Assets/images/welcome.jpg')}
+                style = {{width : "100%", height : 260,alignSelf : "center",borderRadius :0}}
+            />
+            <Text style = {{textAlign :"center",fontSize : 16,color : "rgba(252, 182, 3, 1)" ,fontStyle : "italic",fontWeight : "200"}}>Book hotel at your vaccation destination at one click</Text>
+        </View>
+    </View>
+    <Text style = {style.heading}>Popular Destination</Text>
       <FlatList style = {style.cityContainer} 
         horizontal 
         data = {cities}
@@ -109,35 +100,24 @@ const HomeScreen = (props) => {
       <Text style = {style.heading}>Offers</Text> 
       <View>
         {offerBlock}
-        <Button 
-          title = "Explore more"
-          icon = {<MaterialCommunityIcons 
-            name="briefcase-search-outline" 
-            size={20} 
-            color="#fff" 
-            style = {{marginRight : 10}}  
-          />}
-          buttonStyle = {style.buttonStyle}
-          titleStyle = {{fontSize : 14}}
-        />
       </View>
        <Text style = {style.heading} >KASHA.com Special</Text>
-        <View style = {{display : "flex",flexDirection : "row", justifyContent : "space-between",alignItems : "center",marginBottom : 50}}>
-            <View style = {{width : "49%",backgroundColor: "#fff",elevation : 1,padding: 5,height : 250,borderRadius : 5}}>
+        <View style = {{display : "flex",flexDirection : "column", justifyContent : "space-between",alignItems : "center",marginBottom : 50}}>
+            <View style = {{width : "100%",backgroundColor: "#fff",elevation : 2,padding: 5,height : 250,borderRadius : 5,marginVertical : 10}}>
                 <Image 
                   source = {require('../Assets/images/hotels.jpg')}
-                  style = {{width : "100%",height : 100}}
+                  style = {{width : "100%",height : 150}}
                 />
                 <Text style = {{width : "100%", color : "#111", fontSize : 18,fontWeight : "700",padding : 10}}>Hotels</Text>
-                <Text style = {{lineHeight : 20, letterSpacing : 1,padding : 2,textAlign : "justify",fontWeight : "300"}}>Plan your trips with India's largest hotel chain </Text>
+                <Text style = {{lineHeight : 20, letterSpacing : 1,padding : 10,textAlign : "justify",fontWeight : "300"}}>Plan your trips with India's largest hotel chain </Text>
             </View>
-            <View style = {{width : "49%",backgroundColor: "#fff",elevation : 1,padding: 5,borderRadius : 5,height : 250}}>
+            <View style = {{width : "100%",backgroundColor: "#fff",elevation : 1,padding: 5,borderRadius : 5,height : 260}}>
                 <Image 
                   source = {require('../Assets/images/resort.jpg')}
-                  style = {{width : "100%",height : 100}}
+                  style = {{width : "100%",height : 150}}
                 />
                 <Text style = {{width : "100%", color : "#111", fontSize : 18,fontWeight : "700",padding : 10}}>Resort</Text>
-                <Text style = {{lineHeight : 20, letterSpacing : 1,padding : 2,textAlign : "justify"}}>Plan your trips ,parties and wedding with India's largest Resort chain </Text>
+                <Text style = {{lineHeight : 20, letterSpacing : 1,padding : 10,textAlign : "justify"}}>Plan your trips ,parties and wedding with India's largest Resort chain </Text>
             </View>
        </View>
     </ScrollView>}
@@ -152,8 +132,8 @@ const style = StyleSheet.create({
     flex : 1,
   },  
   citiyIcon : { 
-     height: 50,
-     width: 50 ,
+     height: 80,
+     width: 80 ,
      borderRadius : 10,
      marginRight: 10,
      marginLeft : 10,
@@ -161,12 +141,17 @@ const style = StyleSheet.create({
   cityName :{
     marginTop : 5,
     textAlign : "center",
-    color : "#f07532"
+    color : "#f07532",
+    fontSize : 16
   },
   heading : {
-    marginBottom : 20,
+    borderTopWidth : 3,
+    marginTop :10,
+    paddingTop :10,
+    borderColor : "#ddd",
+    marginBottom : 10,
     fontSize : 18,
-    color : "#f07532",
+    color :"#444",
     fontWeight : "700",
   },
   buttonStyle : {
@@ -179,7 +164,7 @@ const style = StyleSheet.create({
   cityContainer : {
    paddingBottom : 10,
    marginBottom : 10,
-    borderBottomWidth : 1,
+    borderBottomWidth : 0,
     borderColor : "#f07532"
   }
 });

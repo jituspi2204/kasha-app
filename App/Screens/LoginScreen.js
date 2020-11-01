@@ -46,7 +46,7 @@ class LoginScreen extends React.Component{
           }).then(res => {    
                AsyncStorage.setItem("jwt" , res.data.jwt).then(() => {
                     this.props.login({jwt :res.data.jwt, userType : res.data.userType});
-                    this.props.navigation.navigate('loading')
+                    this.props.navigation.navigate('loading');
                }).catch(err =>{
                 Alert.alert("Invalid","Invalid email or password")
                     this.setState({
@@ -65,10 +65,8 @@ class LoginScreen extends React.Component{
         return(
             <View style = {style.container}>
                <LinearGradient
-                    colors = {["rgba(255, 98, 36, 0.8)"  , "rgba(255, 149, 36,0.9)", ]}
-                    start = {{x : 0, y : 0}}
-                    end = {{x : 0 , y : 1}}
-                    style = {style.gradientContainer}
+                    colors = {["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"]} start = {{x : 0, y : 0}}
+                    end = {{x : 0 , y : 1}} style = {style.gradientContainer}
                >
                <Text style = {style.heading}> LOGIN</Text>
                 <Input 

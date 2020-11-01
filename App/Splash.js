@@ -5,7 +5,7 @@ const Splash = props => {
     return(
         <View style = {style.contaner}>
                       <LinearGradient
-                        colors = {["rgba(255, 98, 36, 0.7)"  , "rgba(255, 149, 36,0.9)"]}
+                        colors = {["rgba(252, 182, 3, 0.7)"  , "rgba(255, 149, 36,0.9)"]}
                         start = {{x : 0, y : 0}}
                         end = {{x : 0 , y : 1}}
                         style = {style.gradientContainer}

@@ -1,11 +1,9 @@
 const defaultstate = {
     user: {
-        
     },
     jwt : null,
     userType : "customer"
 }
-
 
 const reducer  = (state = defaultstate ,action ) => {
     if(action.type === 'LOGIN'){
@@ -28,6 +26,5 @@ const reducer  = (state = defaultstate ,action ) => {
         return state;
     }
 }
-
 
 export default reducer;

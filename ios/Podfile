@@ -10,6 +10,8 @@ target 'kashacom' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'rn-range-slider', :path => '../node_modules/rn-range-slider'
+
   target 'kashacomTests' do
     inherit! :complete
     # Pods for testing

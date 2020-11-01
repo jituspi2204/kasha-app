@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import {View , Text, StyleSheet,Switch} from 'react-native';
+import {View , Text, StyleSheet,Switch,Image} from 'react-native';
 import {Input , Button, CheckBox ,} from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
@@ -90,7 +90,7 @@ class LoginScreen extends React.Component{
             <View style = {style.container}>
             <Header  navigation = {this.props.navigation} title = "My Details"/>
                <LinearGradient
-                    colors = {["rgba(255, 98, 36, 0.8)"  , "rgba(255, 149, 36,0.9)", ]}
+                    colors = {["rgba(255, 98, 36, 0)"  , "rgba(255, 149, 36,0)", ]}
                     start = {{x : 0, y : 0}}
                     end = {{x : 0 , y : 1}}
                     style = {style.gradientContainer}
@@ -99,12 +99,14 @@ class LoginScreen extends React.Component{
              <View style = {{height : 20 , width :"100%"}}>
 
              </View>
+             <Text style = {style.heading}>My Details</Text>
+
                 <Input 
                     placeholder = {this.props.user.name}
                     inputStyle = {style.inputStyle}
                     inputContainerStyle = {style.inputContainerStyle}
                     containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="user" size={24} color="black" />}
+                    leftIcon = {<Feather name="user" size={16} color="black"  style = {{alignItems : "center"}}>  Name</Feather>}
                     onChange = {(event) => {this.inputHandler(event ,"name")} }
                     value = {this.state.name}
                 />
@@ -113,7 +115,7 @@ class LoginScreen extends React.Component{
                     inputStyle = {style.inputStyle}
                     inputContainerStyle = {style.inputContainerStyle}
                     containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="mail" size={24} color="black" />}
+                    leftIcon = {<Feather name="mail" size={16} color="black">  Email</Feather>}
                     onChange = {(event) => {this.inputHandler(event ,"email")} }
                     value = {this.state.email}
                 />
@@ -124,22 +126,24 @@ class LoginScreen extends React.Component{
                     onPress = {this.updateDetails}
                 />
                 {/* <Text style = {style.heading}> Password</Text> */}
-                <Input 
+                <Text style = {style.heading}>Update Password</Text>
+
+                <Input
                     placeholder = "Old Password"
                     inputStyle = {style.inputStyle}
                     inputContainerStyle = {style.inputContainerStyle}
                     containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="unlock" size={24} color="black" />}
+                    leftIcon = {<Feather name="unlock" size={16} color="black">  Old Password</Feather>}
                     onChange = {(event) => {this.inputHandler(event ,"oldPassword")} }
                     value = {this.state.oldPassword}
                     secureTextEntry = {!this.state.showPassword}
                 />
-                <Input 
+                <Input
                     placeholder = "New Password"
                     inputStyle = {style.inputStyle}
                     inputContainerStyle = {style.inputContainerStyle}
                     containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="unlock" size={24} color="black" />}
+                    leftIcon = {<Feather name="unlock" size={16} color="black">  New Password</Feather>}
                     onChange = {(event) => {this.inputHandler(event ,"password")} }
                     value = {this.state.password}
                     secureTextEntry = {!this.state.showPassword}
@@ -149,7 +153,7 @@ class LoginScreen extends React.Component{
                     inputStyle = {style.inputStyle}
                     inputContainerStyle = {style.inputContainerStyle}
                     containerStyle = {style.containerStyle}
-                    leftIcon = {<Feather name="unlock" size={24} color="black" />}
+                    leftIcon = {<Feather name="unlock" size={16} color="black">  Confirm Password</Feather>}
                     onChange = {(event) => {this.inputHandler(event ,"confirmPassword")} }
                     value = {this.state.confirmPassword}
                     secureTextEntry = {!this.state.showPassword}
@@ -170,52 +174,55 @@ class LoginScreen extends React.Component{
 const style = StyleSheet.create({
     container : {
         flex : 1,
+       
     },
     gradientContainer : {
         flex : 1,
-        padding : 10,
+        padding : 0,
         display : "flex",
         alignItems : "center",
         justifyContent : "center"
     },
     inputStyle :{
         color : "#444",
-        fontSize : 15
+        fontSize : 15,
+        height : 50,
+        textAlign : "right"
     },
     inputContainerStyle : {
         borderBottomWidth :0,
         backgroundColor : "#fff",
-        borderRadius : 10,
-        paddingLeft : 10
+        borderRadius : 4,
+        paddingLeft : 10,
+        height : 50
     },
     containerStyle : {
         width : "100%",
-        height : 60,
-        marginBottom : 20
+        height : 50,
+        marginBottom : 4
     },
     heading : {
-        alignSelf: "center",
-        fontSize : 22,
-        fontWeight : "700",
-        color : "#fff",
-        marginBottom : "10%",
-        marginTop : "10%"
+        fontSize : 18,
+        fontWeight : "600",
+        color : "#444",
+        paddingLeft : 10,
+        paddingVertical : 10
     },
     buttonStyle :{
-        backgroundColor : "rgba(255,255,255,0)",
-        borderWidth :1,
+        backgroundColor : "rgba(255, 149, 36,0.9)",
+        borderWidth :0,
         borderColor : "#fff",
         width : "100%",
         height:"100%",
-        borderRadius : 30
+        borderRadius : 40
     },
     buttonContainerStyle : {
-        height: 60,
+        height: 50,
         width: "95%",
         alignSelf : "center",
-        borderRadius : 30,
-        marginTop : 20,
-        marginBottom : 20
+        borderRadius : 40,
+        marginTop : 10,
+        marginBottom : 10
     },
     CheckboxContainerStyle : {
         backgroundColor : "rgba(255,255,255,0)",
